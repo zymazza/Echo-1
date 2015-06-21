@@ -8,9 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -24,7 +29,7 @@ public class DetailsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_activity);
-        MapFragment fragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        final MapFragment fragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         TextView event_name = (TextView) findViewById(R.id.event_name_details);
         final TextView where_txt = (TextView) findViewById(R.id.where_text_details);
@@ -32,7 +37,8 @@ public class DetailsActivity extends Activity {
         final TextView description_txt = (TextView) findViewById(R.id.description_text_details);
 
         Intent i = getIntent();
-        event_name.setText(i.getStringExtra("EVENTNAME_DETAILS"));
+        final String name =  i.getStringExtra("EVENTNAME_DETAILS");
+        event_name.setText(name);
         String id =  i.getStringExtra("EVENTID");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("LiveEvents");
         final ArrayList<String> cats = new ArrayList<>();
@@ -51,6 +57,19 @@ public class DetailsActivity extends Activity {
                     if (event.getBoolean("music")) cats.add("Music");
                     if (event.getBoolean("outdoors")) cats.add("Outdoors");
                     if (event.getBoolean("sports")) cats.add("Sports");
+                    ParseGeoPoint p = event.getParseGeoPoint("Location");
+                    LatLng pos = new LatLng(p.getLatitude(), p.getLongitude());
+                    fragment.getMap().addMarker(new MarkerOptions()
+                            .position(new LatLng(p.getLatitude(), p.getLongitude()))
+                            .title(event.getString(name)));
+                    final CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(pos)      // Sets the center of the map to Mountain View
+                            .zoom(13)                   // Sets the zoom
+                            .bearing(90)                // Sets the orientation of the camera to east
+                            .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                            .build();
+                    fragment.getMap().animateCamera(CameraUpdateFactory.
+                            newCameraPosition(cameraPosition));
                 } else {
                     Log.i("ECHO", "Parse exception");
                     e.printStackTrace();

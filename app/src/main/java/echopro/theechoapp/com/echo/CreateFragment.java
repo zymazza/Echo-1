@@ -19,6 +19,7 @@ import com.parse.ParseObject;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateFragment extends Fragment {
 
@@ -27,7 +28,8 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        final View rootView = inflater.inflate(R.layout.create_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.create_fragment, container, false);
+        rootView.setVerticalScrollBarEnabled(true);
         final EditText eventName = (EditText)rootView.findViewById(R.id.event_name);
         final EditText description = (EditText) rootView.findViewById(R.id.description_text_create);
         final CheckBox entryFee = (CheckBox) rootView.findViewById(R.id.entry_fee);
@@ -46,8 +48,11 @@ public class CreateFragment extends Fragment {
         done.setClickable(true);
 
 
-
-        final Geocoder geo = new Geocoder(getActivity());
+        description.setTextSize(5);
+        eventName.setTextSize(5);
+        location.setTextSize(5);
+        final Geocoder geo = new Geocoder(getActivity().getApplicationContext(),
+                Locale.getDefault());
         try {
             List<Address> addresses = geo.getFromLocationName(location.getText().toString(),
                     1);

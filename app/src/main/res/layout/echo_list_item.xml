@@ -3,6 +3,7 @@
     android:orientation="horizontal"
     android:id="@+id/echo_text"
     android:textSize="14sp"
+    android:padding="5dp"
     android:layout_width="match_parent" android:layout_height="80dp">
 
 

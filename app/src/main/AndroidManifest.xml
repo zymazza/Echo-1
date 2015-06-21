@@ -29,6 +29,7 @@
         <activity
             android:name=".EchoActivity"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:icon="@drawable/ic_echo"
             android:logo="@drawable/ic_echo">
             <service android:name=".GeofenceTransitionsIntentService"/>
