@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class CreateFragment extends Fragment {
@@ -81,6 +82,19 @@ public class CreateFragment extends Fragment {
                 event.saveInBackground();
                 Toast.makeText(getActivity(), "Event Sent", Toast.LENGTH_SHORT).show();
                 done.setClickable(false);
+                alcohol.setChecked(false);
+                casual.setChecked(false);
+                music.setChecked(false);
+                outdoors.setChecked(false);
+                sports.setChecked(false);
+                entryFee.setChecked(false);
+                datePicker.init(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, null);
+                timePicker.setCurrentHour(Calendar.HOUR);
+                timePicker.setCurrentMinute(Calendar.MINUTE);
+                eventName.setText(new char[0], 0, 0);
+                description.setText(new char[0], 0, 0);
+                location.setText(new char[0], 0, 0);
+
             }
         });
 
@@ -91,6 +105,7 @@ public class CreateFragment extends Fragment {
     @Override
     public void onPause(){
         //this.setArguments(null);
+        super.onPause();
         setRetainInstance(false);
     }
 
