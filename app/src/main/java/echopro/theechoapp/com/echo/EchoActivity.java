@@ -3,7 +3,7 @@ package echopro.theechoapp.com.echo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +14,7 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 
-public class EchoActivity extends ActionBarActivity {
+public class EchoActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     ArrayList<Event> events;
 

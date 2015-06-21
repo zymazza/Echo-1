@@ -4,14 +4,13 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
-
     <TextView
         android:padding="10dp"
         android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="Loading..."
         android:id="@+id/event_name_details"
         android:layout_gravity="center_horizontal" />
 
@@ -20,20 +19,23 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Where: "
             android:layout_gravity="center_horizontal" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Large Text"
+            android:text="Loading..."
             android:id="@+id/where_text_details"
             android:layout_gravity="center_horizontal" />
         </LinearLayout>
+
     <FrameLayout
         android:padding="10dp"
         android:layout_width="match_parent"
@@ -61,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Large Text"
+            android:text="Loading..."
             android:id="@+id/when_text_details"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
@@ -71,17 +73,19 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Description: "
             android:layout_gravity="center_horizontal" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Large Text"
+            android:text="Loading..."
             android:id="@+id/description_text_details"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
@@ -91,18 +95,18 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
 
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Categories: "
             android:layout_gravity="center_horizontal" />
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/category_list"/>
-
     </LinearLayout>
 
 </LinearLayout>

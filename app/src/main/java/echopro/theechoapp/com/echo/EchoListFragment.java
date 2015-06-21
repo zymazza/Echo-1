@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -47,16 +48,38 @@ public class EchoListFragment extends Fragment {
         spinner=(ProgressBar)rootView.findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
         list = (ListView) rootView.findViewById(R.id.echo_list);
+        ParseGeoPoint loc = new ParseGeoPoint();
+        try {
+            double lat = location.getLatitude();
+            double lon = location.getLongitude();
+        }catch (Exception e){
 
+        }
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("LiveEvents");
-        query.whereGreaterThan("numEchoes", 3);
+        ParseQuery<ParseObject> determine = ParseQuery.getQuery("LiveEvents");
+
+        query.orderByDescending("numEchoes");
+        //ParseGeoPoint loc = new ParseGeoPoint();
+        try {
+            Log.i("LOCATION", String.valueOf(location.getLatitude()));
+            Log.i("LOCATION", String.valueOf(location.getLongitude()));
+            double lat = location.getLatitude();
+            double lon = location.getLongitude();
+            loc.setLatitude(lat);
+            loc.setLongitude(lon);
+            query.whereWithinKilometers("Location", loc, 5);
+        }catch (Exception e){
+
+        }
+        query.orderByDescending("numEchoes");
         spinner.setVisibility(View.VISIBLE);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
+                    int num = Math.min(5, objects.size());
                     Log.d("SUCCESS", "Retrieving objects");
-                    for (int i = 0; i < objects.size(); i++){
+                    for (int i = 0; i < num; i++){
 
                         boolean inList = false;
                         for (int j = 0; j < events.size(); j++) {
@@ -171,6 +194,7 @@ public class EchoListFragment extends Fragment {
         LocationManager locationManager = (LocationManager) this.getActivity().
                 getSystemService(Context.LOCATION_SERVICE);
                 //this.getSystemService(Context.LOCATION_SERVICE);
+        //LocationListener locationListener = new MyLocationListener();
 
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -185,13 +209,17 @@ public class EchoListFragment extends Fragment {
 
             public void onProviderDisabled(String provider) {}
         };
-
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 // Register the listener with the Location Manager to receive location updates
         try {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
         } catch (IllegalArgumentException e){
             //
         }
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location == null) location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         Log.i(TAG, "onAttach exit");
     }
 

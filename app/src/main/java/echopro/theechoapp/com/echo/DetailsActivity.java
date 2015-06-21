@@ -58,10 +58,14 @@ public class DetailsActivity extends Activity {
             }
         });
 
-
+        ArrayAdapter adapter = null;
         ListView list_cat = (ListView) findViewById(R.id.category_list);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,
-                cats);
+        try {
+            adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,
+                    cats);
+        } catch (Exception e){
+            //
+        }
         list_cat.setAdapter(adapter);
     }
 }
